@@ -1,42 +1,52 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.left-item, .right-item, .container {
+    margin: 5px;
+    padding: 5px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.container {
+    word-break: break-all;
+    display: flex;
+    justify-content: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media screen and (min-width: 650px) {
+    .left-item {
+        flex-basis: 40%;
+    }
+
+    .right-item {
+        flex-basis: 60%;
+        overflow-y: scroll;
+        height: calc(100vh - 117px);
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+@media screen and (max-width: 650px) {
+    .container {
+        flex-direction: column;
+    }
 }
 
-.card {
-  padding: 2em;
+h1 {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: -5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Itim";
+    font-size: 2em;
+    text-align: center;
+    border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    color: #2c2c2c;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 10px 10px 10px 10px;
 }
 
-.read-the-docs {
-  color: #888;
+a {
+    text-align: center;
+    text-decoration: none;
 }

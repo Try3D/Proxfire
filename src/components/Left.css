@@ -1,0 +1,37 @@
+textarea,
+input,
+button {
+  color: #2c2c2c;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 10px 10px 10px 10px;
+}
+
+textarea {
+  width: 100%;
+  border-image: url(/icons/textarea.svg) 10 10 10 10 stretch stretch;
+  overflow: hidden;
+  resize: none;
+  color: #2c2c2c;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 10px 10px 10px 10px;
+}
+
+input {
+  width: 100%;
+  border-image: url(/icons/button.svg) 10 10 10 10 stretch stretch;
+  color: #2c2c2c;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 10px 10px 10px 10px;
+}
+
+button {
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 1em;
+  text-align: center;
+  border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+  float: right;
+}
