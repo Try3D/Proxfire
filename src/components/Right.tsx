@@ -39,7 +39,7 @@ const Right = () => {
   return (
     <>
       {posts.map((post) => (
-            haversineDistance(latitude, longitude, post.data.location.latitude, post.data.location.longitude) < 10 ? <Posts key={post.id} post={post} /> : <h1 key={post.id}>hi</h1>
+        haversineDistance(latitude, longitude, post.data.location.latitude, post.data.location.longitude) < 10 ? <Posts key={post.id} post={post} /> : null
       ))}
     </>
   );
