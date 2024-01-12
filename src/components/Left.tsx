@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { doc, setDoc } from "firebase/firestore";
-
 import { db } from "../lib/firebase.ts";
 import { latitude, longitude } from "../lib/location.ts";
 import { append } from "../lib/localStorage.ts";
@@ -8,17 +7,15 @@ import { append } from "../lib/localStorage.ts";
 import "./Left.css";
 
 function Left() {
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
     setTitle(event.target.value);
-  };
+  }
 
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  function handleContentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setContent(event.target.value);
-  };
+  }
 
-  const submit = (e: React.FormEvent) => {
+  function submit(e: FormEvent) {
     e.preventDefault();
 
     const date = new Date();
@@ -38,7 +35,7 @@ function Left() {
 
     setTitle("");
     setContent("");
-  };
+  }
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -47,17 +44,19 @@ function Left() {
     <>
       <form onSubmit={submit}>
         <input
+          className="input"
           type="textbox"
           value={title}
           onChange={handleTitleChange}
           placeholder="Title: "
         />
         <textarea
+          className="textarea"
           value={content}
           onChange={handleContentChange}
           placeholder="What's on your mind?"
         />
-        <button>POST</button>
+        <button className="button">POST</button>
       </form>
     </>
   );

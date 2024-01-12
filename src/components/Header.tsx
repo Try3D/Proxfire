@@ -3,11 +3,7 @@ import "./Header.css";
 function Header() {
   return (
     <>
-      <div>
-        <a href="/">
-          <h1>Proxfire</h1>
-        </a>
-      </div>
+      <h1 className="header">Proxfire</h1>
     </>
   );
 }

@@ -12,7 +12,7 @@ async function updateLocation() {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
   } catch (error) {
-    console.error("Error getting location:", error);
+    alert("This app requires your location to function properly");
   }
 }
 

@@ -4,6 +4,20 @@
   margin: 5px;
 }
 
+img {
+  width: 18px;
+}
+
+.buttons {
+  margin-top: 9px;
+  margin-bottom: 9px;
+  margin-left: -4px;
+  background-color: transparent;
+  border: transparent;
+  float: right;
+  cursor: pointer;
+}
+
 .post-title {
   font-size: 1.75em;
 }

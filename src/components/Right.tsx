@@ -2,8 +2,6 @@ import { db } from "../lib/firebase";
 import { onSnapshot, collection, DocumentData } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Posts from "./Posts";
-import Loader from "./Loader";
-import "./Right.css";
 import { latitude, longitude, haversineDistance } from "../lib/location";
 
 interface Data {
@@ -11,9 +9,8 @@ interface Data {
   data: DocumentData;
 }
 
-const Right = () => {
+function Right() {
   const [posts, setPosts] = useState<Data[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postsCollection = collection(db, "posts");
@@ -27,30 +24,37 @@ const Right = () => {
       postData.sort((a: Data, b: Data) => b.data.time - a.data.time);
 
       setPosts(postData);
-      setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
 
-  return (
-    <>
-      {posts.map((post) =>
-        haversineDistance(
-          latitude,
-          longitude,
-          post.data.location.latitude,
-          post.data.location.longitude,
-        ) < 10 ? (
-          <Posts key={post.id} post={post} />
-        ) : null,
-      )}
-    </>
-  );
+  if (posts.length < 1) {
+    return (
+      <div className="sketch-posts-system">
+        <h2 className="post-title">There are no posts near you</h2>
+        <div className="post-text">
+          Be the first to post something for others to see
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        {posts.map((post) =>
+          haversineDistance(
+            latitude,
+            longitude,
+            post.data.location.latitude,
+            post.data.location.longitude,
+          ) < 10 ? (
+            <Posts key={post.id} post={post} />
+          ) : null,
+        )}
+      </>
+    );
+  }
 };
 
 export default Right;
