@@ -1,0 +1,42 @@
+.post-title,
+.post-text {
+  padding: 5px;
+  margin: 5px;
+}
+
+.post-title {
+  font-size: 1.75em;
+}
+
+.post-text {
+  font-family: Itim;
+  font-size: 1.5em;
+}
+
+.sketch-posts-public,
+.sketch-posts-user,
+.sketch-posts-system {
+  color: #2c2c2c;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 5px 5px 5px 5px;
+  cursor: pointer;
+  background-clip: padding-box;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.sketch-posts-public {
+  border-image: url(../icons/posts-public.svg) 5 5 5 5 stretch stretch;
+  background-color: #6cace4;
+}
+
+.sketch-posts-user {
+  border-image: url(../icons/posts-user.svg) 5 5 5 5 stretch stretch;
+  background-color: #26c485;
+}
+
+.sketch-posts-system {
+  border-image: url(../icons/posts-system.svg) 5 5 5 5 stretch stretch;
+  background-color: #dd2d4a;
+}

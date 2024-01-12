@@ -1,8 +1,9 @@
 import { db } from "../lib/firebase";
-import { getDocs, collection, DocumentData } from "firebase/firestore";
+import { onSnapshot, collection, DocumentData } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Posts from "./Posts";
-import './Right.css';
+import Loader from "./Loader";
+import "./Right.css";
 import { latitude, longitude, haversineDistance } from "../lib/location";
 
 interface Data {
@@ -12,35 +13,42 @@ interface Data {
 
 const Right = () => {
   const [posts, setPosts] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'posts'));
+    const postsCollection = collection(db, "posts");
 
-        const postData: Data[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }));
+    const unsubscribe = onSnapshot(postsCollection, (querySnapshot) => {
+      const postData: Data[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      }));
 
-        // Sort the posts by time inside the useEffect
-        postData.sort((a: Data, b: Data) => b.data.time - a.data.time);
+      postData.sort((a: Data, b: Data) => b.data.time - a.data.time);
 
-        setPosts(postData);
-      } catch (error) {
-        console.error('Error getting documents:', error);
-      }
-    };
+      setPosts(postData);
+      setLoading(false);
+    });
 
-    fetchData();
+    return unsubscribe;
+  }, []);
 
-  }, [latitude, longitude]);
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
-      {posts.map((post) => (
-        haversineDistance(latitude, longitude, post.data.location.latitude, post.data.location.longitude) < 10 ? <Posts key={post.id} post={post} /> : null
-      ))}
+      {posts.map((post) =>
+        haversineDistance(
+          latitude,
+          longitude,
+          post.data.location.latitude,
+          post.data.location.longitude,
+        ) < 10 ? (
+          <Posts key={post.id} post={post} />
+        ) : null,
+      )}
     </>
   );
 };

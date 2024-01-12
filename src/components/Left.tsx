@@ -3,8 +3,9 @@ import { doc, setDoc } from "firebase/firestore";
 
 import { db } from "../lib/firebase.ts";
 import { latitude, longitude } from "../lib/location.ts";
+import { append } from "../lib/localStorage.ts";
 
-import './Left.css';
+import "./Left.css";
 
 function Left() {
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +20,13 @@ function Left() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const date = new Date();
-    setDoc(doc(db, "posts", crypto.randomUUID()), {
+    const id = crypto.randomUUID();
+
+    append(id);
+
+    setDoc(doc(db, "posts", id), {
       time: date.getTime(),
       title: title,
       content: content,
@@ -40,13 +46,21 @@ function Left() {
   return (
     <>
       <form onSubmit={submit}>
-        <input type="textbox" value={title} onChange={handleTitleChange} placeholder="Title: "/>
-        <textarea value={content} onChange={handleContentChange} placeholder="What's on your mind?"/>
+        <input
+          type="textbox"
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="Title: "
+        />
+        <textarea
+          value={content}
+          onChange={handleContentChange}
+          placeholder="What's on your mind?"
+        />
         <button>POST</button>
       </form>
     </>
   );
 }
-
 
 export default Left;

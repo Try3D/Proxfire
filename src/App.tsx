@@ -1,15 +1,12 @@
-import "./App.css";
 import Left from "./components/Left.tsx";
 import Right from "./components/Right.tsx";
+import Header from "./components/Header.tsx";
+import "./App.css";
 
 function App() {
   return (
     <>
-      <div>
-        <a href="/">
-          <h1>Proxfire</h1>
-        </a>
-      </div>
+      <Header />
       <div className="container">
         <div className="left-item">
           <Left />
