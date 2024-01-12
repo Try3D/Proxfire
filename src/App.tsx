@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <div>
-        <a href="/"><h1>Proximity</h1></a>
+        <a href="/">
+          <h1>Proxfire</h1>
+        </a>
       </div>
       <div className="container">
         <div className="left-item">

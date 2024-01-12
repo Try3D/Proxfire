@@ -1,52 +1,54 @@
-.left-item, .right-item, .container {
-    margin: 5px;
-    padding: 5px;
+.left-item,
+.right-item,
+.container {
+  margin: 5px;
+  padding: 5px;
 }
 
 .container {
-    word-break: break-all;
-    display: flex;
-    justify-content: center;
+  word-break: break-all;
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (min-width: 650px) {
-    .left-item {
-        flex-basis: 40%;
-    }
+  .left-item {
+    flex-basis: 40%;
+  }
 
-    .right-item {
-        flex-basis: 60%;
-        overflow-y: scroll;
-        height: calc(100vh - 117px);
-    }
+  .right-item {
+    flex-basis: 60%;
+    overflow-y: scroll;
+    height: calc(100vh - 117px);
+  }
 }
 
 @media screen and (max-width: 650px) {
-    .container {
-        flex-direction: column;
-    }
+  .container {
+    flex-direction: column;
+  }
 }
 
 h1 {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: -5px;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: "Itim";
-    font-size: 2em;
-    text-align: center;
-    border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
-    background-color: #ffffff;
-    background-clip: padding-box;
-    color: #2c2c2c;
-    box-sizing: border-box;
-    border-style: solid;
-    border-width: 10px 10px 10px 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: -5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: "Itim";
+  font-size: 2em;
+  text-align: center;
+  border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  color: #2c2c2c;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 10px 10px 10px 10px;
 }
 
 a {
-    text-align: center;
-    text-decoration: none;
+  text-align: center;
+  text-decoration: none;
 }
