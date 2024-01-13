@@ -26,9 +26,9 @@ export function haversineDistance(
   lat_2: number,
   lon_2: number,
 ): number {
-  let d_lat = ((lat_2 - lat_1) * Math.PI) / 180;
-  let d_lon = ((lon_2 - lon_1) * Math.PI) / 180;
-  let cal =
+  const d_lat = ((lat_2 - lat_1) * Math.PI) / 180;
+  const d_lon = ((lon_2 - lon_1) * Math.PI) / 180;
+  const cal =
     Math.sin(d_lat / 2) * Math.sin(d_lat / 2) +
     Math.cos((lat_1 * Math.PI) / 180) *
       Math.cos((lat_2 * Math.PI) / 180) *

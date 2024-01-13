@@ -1,5 +1,5 @@
 export function append(key: string) {
-  let myPostsStr = localStorage.getItem("posts");
+  const myPostsStr = localStorage.getItem("posts");
   let myPosts: string[] = [];
 
   if (myPostsStr !== null) {
@@ -13,7 +13,7 @@ export function append(key: string) {
 }
 
 export function get() {
-  let myPostsStr = localStorage.getItem("posts");
+  const myPostsStr = localStorage.getItem("posts");
   let myPosts: string[];
 
   if (myPostsStr === null) {
@@ -27,7 +27,7 @@ export function get() {
 }
 
 export function remove(key: string) {
-  let myPostsStr = localStorage.getItem("posts");
+  const myPostsStr = localStorage.getItem("posts");
   let myPosts: string[] = [];
 
   if (myPostsStr !== null) {

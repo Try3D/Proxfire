@@ -12,6 +12,7 @@ import { latitude, longitude, haversineDistance } from "../lib/location.ts";
 import { append } from "../lib/localStorage.ts";
 import "./UI.css";
 import { get, remove } from "../lib/localStorage.ts";
+import close from "../assets/icons/close.svg";
 
 interface Data {
   id: string;
@@ -25,23 +26,9 @@ interface PropPopup {
 }
 
 function UI() {
-  const [updateId, setUpdateId] = useState("");
-  const [inUpdate, setInUpdate] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  function startUpdate(id: string, title: string, content: string) {
-    setUpdateId(id);
-    setTitle(title);
-    setContent(content);
-
-    setInUpdate(true);
-  }
-
-  function Post() {
-    const [postTitle, setPostTitle] = useState(title);
-    const [postContent, setPostContent] = useState(content);
+  function MakePosts() {
+    const [postTitle, setPostTitle] = useState("");
+    const [postContent, setPostContent] = useState("");
 
     function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
       setPostTitle(event.target.value);
@@ -51,25 +38,7 @@ function UI() {
       setPostContent(event.target.value);
     }
 
-    function stopUpdate(id: string, title: string, content: string) {
-      setDoc(
-        doc(db, "posts", id),
-        {
-          title: title,
-          content: content,
-        },
-        { merge: true },
-      );
-
-      setTitle("");
-      setContent("");
-
-      setInUpdate(false);
-    }
-
-    function submit(e: FormEvent) {
-      e.preventDefault();
-
+    function submit() {
       const date = new Date();
       const id = crypto.randomUUID();
 
@@ -89,17 +58,14 @@ function UI() {
       setPostContent("");
     }
 
+    function handleSubmit(event: FormEvent) {
+      event.preventDefault();
+      submit();
+    }
+
     return (
       <>
-        <form
-          onSubmit={
-            inUpdate
-              ? () => {
-                  stopUpdate(updateId, postTitle, postContent);
-                }
-              : submit
-          }
-        >
+        <form onSubmit={handleSubmit}>
           <input
             className="input"
             type="textbox"
@@ -113,9 +79,7 @@ function UI() {
             onChange={handleContentChange}
             placeholder="What's on your mind?"
           />
-          <button className="button">
-            {inUpdate ? <>UPDATE POST</> : <>POST</>}
-          </button>
+          <button className="button">POST</button>
         </form>
       </>
     );
@@ -209,123 +173,114 @@ function UI() {
         ))}
       </>
     );
-  }
 
-  function Posts({ post: { id, data } }: { post: Data }) {
-    const { title, content } = data;
+    function Posts({ post: { id, data } }: { post: Data }) {
+      const { title, content } = data;
 
-    function Popup({ title, content, style }: PropPopup) {
-      return (
-        <div className="popup" ref={modalRef}>
-          <div className="popup-content">
-            <div className={style}>
+      function Popup({ title, content, style }: PropPopup) {
+        return (
+          <div className="popup" ref={modalRef}>
+            <div className="popup-content">
+              <div className={style}>
+                <h2 className="post-title">{title}</h2>
+                <div className="post-text">{content}</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const modalRef = useRef<HTMLDivElement>(null);
+
+      const openModal = () => {
+        setIsModalOpen(true);
+      };
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+
+      const handleOutsideClick = (event: MouseEvent) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          closeModal();
+        }
+      };
+
+      useEffect(() => {
+        document.addEventListener("click", handleOutsideClick);
+        return () => {
+          document.removeEventListener("click", handleOutsideClick);
+        };
+      }, []);
+
+      const myPosts = get();
+
+      async function deletePost(id: string) {
+        await deleteDoc(doc(db, "posts", id));
+        remove(id);
+      }
+
+      if (myPosts.indexOf(id) === -1) {
+        return (
+          <>
+            {isModalOpen && (
+              <Popup
+                title={title}
+                content={content}
+                style="sketch-posts-public"
+              />
+            )}
+            <div
+              className="sketch-posts-public"
+              key={id}
+              ref={modalRef}
+              onClick={openModal}
+            >
               <h2 className="post-title">{title}</h2>
               <div className="post-text">{content}</div>
             </div>
-          </div>
-        </div>
-      );
-    }
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
-
-    const openModal = () => {
-      setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-      setIsModalOpen(false);
-    };
-
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (modalRef.current && event.target === modalRef.current) {
-        closeModal();
+          </>
+        );
       }
-    };
 
-    useEffect(() => {
-      document.addEventListener("click", handleOutsideClick);
-      return () => {
-        document.removeEventListener("click", handleOutsideClick);
-      };
-    }, []);
-
-    const myPosts = get();
-
-    async function deletePost(id: string) {
-      await deleteDoc(doc(db, "posts", id));
-      remove(id);
-    }
-
-    if (myPosts.indexOf(id) === -1) {
       return (
         <>
           {isModalOpen && (
             <Popup
               title={title}
-              content={content}
-              style="sketch-posts-public"
+              content={data.content}
+              style="sketch-posts-user"
             />
           )}
           <div
-            className="sketch-posts-public"
+            className="sketch-posts-user"
             key={id}
             ref={modalRef}
             onClick={openModal}
           >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                deletePost(id);
+              }}
+              className="buttons"
+            >
+              <img src={close} alt="close" className="img" />
+            </button>
             <h2 className="post-title">{title}</h2>
             <div className="post-text">{content}</div>
           </div>
         </>
       );
     }
-
-    return (
-      <>
-        {isModalOpen && (
-          <Popup
-            title={title}
-            content={data.content}
-            style="sketch-posts-user"
-          />
-        )}
-        <div
-          className="sketch-posts-user"
-          key={id}
-          ref={modalRef}
-          onClick={openModal}
-        >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              deletePost(id);
-            }}
-            className="buttons"
-          >
-            <img src="/icons/close.svg" />
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              startUpdate(id, title, content);
-            }}
-            className="buttons"
-          >
-            <img src="/icons/edit.svg" />
-          </button>
-          <h2 className="post-title">{title}</h2>
-          <div className="post-text">{content}</div>
-        </div>
-      </>
-    );
   }
 
   return (
     <>
       <div className="container">
         <div className="left-item">
-          <Post />
+          <MakePosts />
         </div>
         <div className="right-item">
           <Feed />
