@@ -1,20 +1,20 @@
-import Left from "./components/Left.tsx";
-import Right from "./components/Right.tsx";
-import Header from "./components/Header.tsx";
+import Feed from "./components/Feed.tsx";
+import Posts from "./components/Posts.tsx";
+import Navbar from "./components/Navbar.tsx";
 import "./App.css";
 
 function App() {
   return (
     <>
       <header>
-        <Header />
+        <Navbar />
       </header>
       <div className="container">
         <div className="left-item">
-          <Left />
+          <Posts />
         </div>
         <div className="right-item">
-          <Right />
+          <Feed />
         </div>
       </div>
     </>

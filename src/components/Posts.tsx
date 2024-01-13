@@ -1,44 +1,65 @@
+import { useState, ChangeEvent, FormEvent } from "react";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../lib/firebase.ts";
-import { get, remove } from "../lib/localStorage.ts";
-import { doc, deleteDoc, DocumentData } from "firebase/firestore";
+import { latitude, longitude } from "../lib/location.ts";
+import { append } from "../lib/localStorage.ts";
+
 import "./Posts.css";
 
-interface Data {
-  id: string;
-  data: DocumentData;
-}
-
-function Posts({ post }: { post: Data }) {
-  const myPosts = get();
-
-  async function deletePost(id: string) {
-    await deleteDoc(doc(db, "posts", id));
-    remove(id);
+function Left() {
+  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
+    setTitle(event.target.value);
   }
+
+  function handleContentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setContent(event.target.value);
+  }
+
+  function submit(e: FormEvent) {
+    e.preventDefault();
+
+    const date = new Date();
+    const id = crypto.randomUUID();
+
+    append(id);
+
+    setDoc(doc(db, "posts", id), {
+      time: date.getTime(),
+      title: title,
+      content: content,
+      location: {
+        latitude: latitude,
+        longitude: longitude,
+      },
+    });
+
+    setTitle("");
+    setContent("");
+  }
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   return (
     <>
-      {myPosts.indexOf(post.id) === -1 ? (
-        <div className="sketch-posts-public" key={post.id}>
-          <h2 className="post-title">{post.data.title}</h2>
-          <div className="post-text">{post.data.content}</div>
-        </div>
-      ) : (
-        <div className="sketch-posts-user" key={post.id}>
-          <button
-            onClick={() => {
-              deletePost(post.id);
-            }}
-            className="buttons"
-          >
-            <img src="/icons/close.svg" />
-          </button>
-          <h2 className="post-title">{post.data.title}</h2>
-          <div className="post-text">{post.data.content}</div>
-        </div>
-      )}
+      <form onSubmit={submit}>
+        <input
+          className="input"
+          type="textbox"
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="Title: "
+        />
+        <textarea
+          className="textarea"
+          value={content}
+          onChange={handleContentChange}
+          placeholder="What's on your mind?"
+        />
+        <button className="button">POST</button>
+      </form>
     </>
   );
 }
 
-export default Posts;
+export default Left;
