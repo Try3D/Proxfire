@@ -8,7 +8,7 @@
   font-family: "Itim";
   font-size: 2.5em;
   text-align: center;
-  border-image: url(src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
+  border-image: url(/src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
   background-color: #ffffff;
   background-clip: padding-box;
   color: #2c2c2c;

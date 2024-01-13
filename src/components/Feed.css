@@ -58,16 +58,16 @@
 }
 
 .sketch-posts-public {
-  border-image: url(src/assets/icons/posts-public.svg) 5 5 5 5 stretch stretch;
+  border-image: url(/src/assets/icons/posts-public.svg) 5 5 5 5 stretch stretch;
   background-color: #6cace4;
 }
 
 .sketch-posts-user {
-  border-image: url(src/assets/icons/posts-user.svg) 5 5 5 5 stretch stretch;
+  border-image: url(/src/assets/icons/posts-user.svg) 5 5 5 5 stretch stretch;
   background-color: #26c485;
 }
 
 .sketch-posts-system {
-  border-image: url(src/assets/icons/posts-system.svg) 5 5 5 5 stretch stretch;
+  border-image: url(/src/assets/icons/posts-system.svg) 5 5 5 5 stretch stretch;
   background-color: #dd2d4a;
 }
