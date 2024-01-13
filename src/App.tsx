@@ -1,5 +1,6 @@
-import UI from "./components/UI.tsx";
 import Navbar from "./components/Navbar.tsx";
+import MakePosts from "./components/MakePosts.tsx";
+import Feed from "./components/Feed.tsx";
 import "./App.css";
 
 function App() {
@@ -8,7 +9,14 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <UI />
+      <main className="container">
+        <div className="left-item">
+          <MakePosts />
+        </div>
+        <div className="right-item">
+          <Feed />
+        </div>
+      </main>
     </>
   );
 }
