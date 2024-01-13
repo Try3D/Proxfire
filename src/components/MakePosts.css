@@ -16,7 +16,7 @@
   font-size: 1.1em;
   width: 100%;
   height: 200px;
-  border-image: url(src/assets/icons/textarea.svg) 10 10 10 10 stretch stretch;
+  border-image: url(/src/assets/icons/textarea.svg) 10 10 10 10 stretch stretch;
   overflow: hidden;
   resize: none;
   color: #2c2c2c;
@@ -29,7 +29,7 @@
   margin-bottom: 5px;
   font-size: 1.1em;
   width: 100%;
-  border-image: url(src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
+  border-image: url(/src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
   color: #2c2c2c;
   box-sizing: border-box;
   border-style: solid;
@@ -41,6 +41,6 @@
   margin-top: 5px;
   font-size: 1.25em;
   text-align: center;
-  border-image: url(src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
+  border-image: url(/src/assets/icons/button.svg) 10 10 10 10 stretch stretch;
   float: right;
 }
